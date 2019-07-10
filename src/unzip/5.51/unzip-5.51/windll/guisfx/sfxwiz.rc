@@ -1,0 +1,11 @@
+#include <windows.h>
+
+
+#include "dialog.h"
+
+#include "sfxwiz.dlg"
+
+#include "SFXWiz32.rc"
+
+ICN_INSTALL ICON  "sfxw.ico"
+

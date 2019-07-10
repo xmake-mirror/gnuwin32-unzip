@@ -1,0 +1,164 @@
+diff -ipuwr -x config.log -x config.status -x config.cache -x '*.Po' -x '*.pot' unzip-5.50-orig/Makefile unzip-5.50/Makefile
+--- unzip-5.50-orig/Makefile	2001-11-10 22:40:16.000000000 +0100
++++ unzip-5.50/Makefile	2003-10-05 13:32:02.593750000 +0200
+@@ -65,13 +65,17 @@ CC_SPEED_OPT = -O2 $(CC_CPU_OPT)
+ CC_OUT_OPT = -o
+ 
+ # Other specific options
+-CC_SPECIFIC_OPT = -c -DASM_CRC -DWIN32
++CFLAGSEXTRA = -D__GW32__ -D__GTHREAD_HIDE_WIN32API -D_LARGEFILE_SOURCE=1 -D_LARGEFILE64_SOURCE=1 \
++	-D_FILE_OFFSET_BITS=64 \
++	-Wall -mms-bitfields  -fno-exceptions -fomit-frame-pointer -march=i386 -mcpu=i686 \
++	-DUNIXBACKUP -DUSE_UNSHRINK
++CC_SPECIFIC_OPT = -c -DASM_CRC -DWIN32 $(CFLAGSEXTRA)
+ AS_SPECIFIC_OPT = -c
+ LD_SPECIFIC_OPT = -o $@
+ 
+ # Libraries for the debug & release version
+ # (GCC 2.95 and newer does not require the following library specifications)
+-LD_RELEASE_LIBS = -luser32 -ladvapi32
++LD_RELEASE_LIBS = -lgw32c -lole32 -luuid -luser32 -ladvapi32
+ LD_DEBUG_LIBS = $(LD_RELEASE_LIBS)
+ 
+ 
+@@ -129,29 +133,30 @@ OBJU2 = explode$(OBJ) extract$(OBJ) file
+ OBJU3 = list$(OBJ) match$(OBJ) process$(OBJ) ttyio$(OBJ) unreduce$(OBJ)
+ OBJU4 = unshrink$(OBJ) zipinfo$(OBJ)
+ OBJUS = win32$(OBJ) nt$(OBJ)
+-OBJU  = $(OBJU1) $(OBJU2) $(OBJU3) $(OBJU4) $(OBJA) $(OBJUS)
++OBJU  = $(OBJU1) $(OBJU2) $(OBJU3) $(OBJU4) $(OBJA) $(OBJUS) unzip-rc$(OBJ)
++OBJI  = $(OBJU:unzip-rc.o=zipinfo-rc.o)
+ OBJX1 = unzipsfx$(OBJ) crc32x$(OBJ) crctabx$(OBJ) cryptx$(OBJ) extractx$(OBJ)
+ OBJX2 = fileiox$(OBJ) globalsx$(OBJ) inflatex$(OBJ) matchx$(OBJ) processx$(OBJ)
+ OBJX3 = ttyiox$(OBJ)
+ OBJXS = win32x$(OBJ) ntx$(OBJ)
+-OBJX  = $(OBJX1) $(OBJX2) $(OBJX3) $(OBJA) $(OBJXS)
++OBJX  = $(OBJX1) $(OBJX2) $(OBJX3) $(OBJA) $(OBJXS) unzipsfx-rc$(OBJ)
+ OBJF1 = funzip$(OBJ) crc32$(OBJ) cryptf$(OBJ) globalsf$(OBJ) inflatef$(OBJ)
+ OBJF2 = ttyiof$(OBJ)
+ OBJFS = win32f$(OBJ)
+-OBJF  = $(OBJF1) $(OBJF2) $(OBJA) $(OBJFS)
++OBJF  = $(OBJF1) $(OBJF2) $(OBJA) $(OBJFS) funzip-rc$(OBJ)
+ OBJDLL = windll$(OBJ) windllrc$(OBJ) api$(OBJ)
+ OBJD1 = crc32l$(OBJ) crctabl$(OBJ) cryptl$(OBJ)
+ OBJD2 = explodel$(OBJ) extractl$(OBJ) fileiol$(OBJ) globalsl$(OBJ)
+ OBJD3 = inflatel$(OBJ) listl$(OBJ) matchl$(OBJ) processl$(OBJ)
+ OBJD4 = unreducl$(OBJ) unshrnkl$(OBJ) zipinfol$(OBJ)
+ OBJDS = win32l$(OBJ) ntl$(OBJ)
+-OBJD  = $(OBJDLL) $(OBJD1) $(OBJD2) $(OBJD3) $(OBJD4) $(OBJA) $(OBJDS)
++OBJD  = $(OBJDLL) $(OBJD1) $(OBJD2) $(OBJD3) $(OBJD4) $(OBJA) $(OBJDS) unzip32-rc$(OBJ)
+ OBLX1 = apig$(OBJ) crc32g$(OBJ) crctabg$(OBJ) cryptg$(OBJ)
+ OBLX2 = extractg$(OBJ) fileiog$(OBJ) globalsg$(OBJ) inflateg$(OBJ)
+ OBLX3 = matchg$(OBJ) processg$(OBJ)
+ OBLXS = win32g$(OBJ) ntg$(OBJ) windllg$(OBJ)
+ OBLX  = $(OBLX1) $(OBLX2) $(OBLX3) $(OBJA) $(OBLXS)
+-OBGX  = sfxwiz$(OBJ) sfxwizrc$(OBJ)
++OBGX  = sfxwiz$(OBJ) sfxwizrc$(OBJ) SFXWiz32-rc$(OBJ)
+ OBJLIB = windllb$(OBJ) apib$(OBJ)
+ OBJB1 = crc32b$(OBJ) crctabb$(OBJ) cryptb$(OBJ)
+ OBJB2 = explodeb$(OBJ) extractb$(OBJ) fileiob$(OBJ) globalsb$(OBJ)
+@@ -167,16 +172,19 @@ WINDLL_IMP_H = windll/decs.h windll/stru
+ 
+ 
+ # Default target is all the executables
+-unzips: unzip$(EXE) funzip$(EXE) unzipsfx$(EXE)
++all:    unzips dll dllsample guisfx lib
++unzips: unzip$(EXE) funzip$(EXE) unzipsfx$(EXE) zipinfo$(EXE)
+ dll:    unzip32.dll
+ dllsample: uzexampl.exe
+ guisfx: SFXWiz32.exe
+ lib:    libunzip32.a
+-all:    unzips dll dllsample guisfx lib
+ 
+ unzip$(EXE): $(OBJU)
+ 	$(LD) $(LDFLAGS) $(LDVER) $(OBJU) $(LDLIBS)
+ 
++zipinfo$(EXE): $(OBJI)
++	$(LD) $(LDFLAGS) $(LDVER) $(OBJI) $(LDLIBS)
++
+ unzipsfx$(EXE): $(OBJX)
+ 	$(LD) $(LDFLAGS) $(LDVER) $(OBJX) $(LDLIBS)
+ 
+@@ -184,7 +192,8 @@ funzip$(EXE): $(OBJF)
+ 	$(LD) $(LDFLAGS) $(LDVER) $(OBJF) $(LDLIBS)
+ 
+ unzip32.dll: $(DLLDEF) $(OBJD)
+-	dllwrap --driver-name $(CC) --def $(DLLDEF) $(LDFLAGS) $(LDVER) $(OBJD) $(LDLIBS)
++#	dllwrap --driver-name $(CC) --def $(DLLDEF) $(LDFLAGS) $(LDVER) $(OBJD) $(LDLIBS)
++	o2dll.sh -o $@ -l libunzip32 -d $(DLLDEF) $(LDFLAGS) $(LDVER) $(OBJD) $(LDLIBS)
+ 
+ libunzsfx32.a: $(OBLX)
+ 	$(AR) -rus $@ $(OBLX)
+@@ -192,8 +201,8 @@ libunzsfx32.a: $(OBLX)
+ SFXWiz32$(EXE): $(OBGX) libunzsfx32.a
+ 	$(LD) $(GUILDFLAG) $(LDFLAGS) $(LDVER) $(OBGX) -L. -lunzsfx32 $(LDLIBS)
+ 
+-uzexampl$(EXE): uzexampl$(OBJ)
+-	$(CC) $(LDFLAGS) $(LDVER) uzexampl$(OBJ) -lversion $(LDLIBS)
++uzexampl$(EXE): uzexampl$(OBJ) uzexampl-rc$(OBJ)
++	$(CC) $(LDFLAGS) $(LDVER) uzexampl$(OBJ) uzexampl-rc$(OBJ) -lversion $(LDLIBS)
+ 
+ libunzip32.a: $(OBJB)
+ 	$(AR) -rus $@ $(OBJB)
+@@ -205,6 +214,11 @@ libunzip32.a: $(OBJB)
+ .S$(OBJ):
+ 	$(AS) $(ASFLAGS) $(ASVER) $(GENFLAGS) $<
+ 
++# Rule to make compiled resource (Windows)
++%-rc$(OBJ): %.rc
++	windres -i $< -o $@
++
++
+ # Dependencies
+ crc32$(OBJ):    crc32.c $(UNZIP_H) zip.h
+ crctab$(OBJ):   crctab.c $(UNZIP_H) zip.h
+@@ -345,7 +359,7 @@ windll$(OBJ): windll/windll.c $(UNZIP_H)
+ 	$(CC) $(CFLAGS) $(CVER) $(GENDLLFL) -I. windll/windll.c
+ 
+ windllrc$(OBJ):	windll/windll.rc unzvers.h
+-	- $(RC) -o $@ windll/windll.rc
++	- $(RC) --include-dir . -o $@ windll/windll.rc
+ 
+ # SFX Lib compilation section
+ apig$(OBJ):	api.c $(UNZIP_H) $(WINDLL_H) unzvers.h
+@@ -391,7 +405,7 @@ sfxwiz$(OBJ):	windll/guisfx/sfxwiz.c win
+ 	$(CC) $(CFLAGS) $(CVER) $(GENGUISX) -I. windll/guisfx/sfxwiz.c
+ 
+ sfxwizrc$(OBJ):	windll/guisfx/sfxwiz.rc
+-	- $(RC)  --include-dir windll/guisfx --define WIN32 -o$@ \
++	- $(RC)  --include-dir windll/guisfx --include-dir . --define WIN32 -o$@ \
+ 		windll/guisfx/sfxwiz.rc
+ 
+ # Static LIB compilation section
+diff -ipuwr -x config.log -x config.status -x config.cache -x '*.Po' -x '*.pot' unzip-5.50-orig/win32/win32.c unzip-5.50/win32/win32.c
+--- unzip-5.50-orig/win32/win32.c	2002-01-20 22:48:32.000000000 +0100
++++ unzip-5.50/win32/win32.c	2003-10-04 21:17:25.750000000 +0200
+@@ -62,7 +62,7 @@
+ 
+ #ifndef FUNZIP          /* most of this file is not used with fUnZip */
+ 
+-#if (defined(__EMX__) || defined(__CYGWIN__))
++#if (defined(__EMX__) || defined(__CYGWIN__) || defined(__GW32__))
+ #  define MKDIR(path,mode)   mkdir(path,mode)
+ #else
+ #  define MKDIR(path,mode)   mkdir(path)
+diff -ipuwr -x config.log -x config.status -x config.cache -x '*.Po' -x '*.pot' unzip-5.50-orig/windll/guisfx/sfxwiz.rc unzip-5.50/windll/guisfx/sfxwiz.rc
+--- unzip-5.50-orig/windll/guisfx/sfxwiz.rc	1998-11-10 00:54:56.000000000 +0100
++++ unzip-5.50/windll/guisfx/sfxwiz.rc	2003-10-05 09:19:16.859375000 +0200
+@@ -5,5 +5,7 @@
+ 
+ #include "sfxwiz.dlg"
+ 
++#include "SFXWiz32.rc"
++
+ ICN_INSTALL ICON  "sfxw.ico"
+ 
+diff -ipuwr -x config.log -x config.status -x config.cache -x '*.Po' -x '*.pot' unzip-5.50-orig/windll/windll.rc unzip-5.50/windll/windll.rc
+--- unzip-5.50-orig/windll/windll.rc	2002-02-17 19:17:16.000000000 +0100
++++ unzip-5.50/windll/windll.rc	2003-10-05 09:43:40.812500000 +0200
+@@ -38,3 +38,5 @@ BEGIN
+ #endif
+     END
+ END
++
++#include "unzip32.rc"

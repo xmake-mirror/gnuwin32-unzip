@@ -1,0 +1,47 @@
+win32/win32.c: In function `NTQueryVolInfo':
+win32/win32.c:1570: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/win32.c:1570: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/win32.c:1571: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/win32.c: In function `checkdir':
+win32/win32.c:2322: warning: implicit declaration of function `mkdir'
+win32/nt.c: In function `Initialize':
+win32/nt.c:115: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/nt.c:119: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/win32.c: In function `NTQueryVolInfo':
+win32/win32.c:1570: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/win32.c:1570: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/win32.c:1571: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/win32.c: In function `checkdir':
+win32/win32.c:2322: warning: implicit declaration of function `mkdir'
+win32/nt.c: In function `Initialize':
+win32/nt.c:115: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/nt.c:119: warning: dereferencing type-punned pointer will break strict-aliasing rules
+h:\mingw\3.3.1\bin\windres.exe: warning: 16: 1: 1033: duplicate value
+win32/win32.c: In function `NTQueryVolInfo':
+win32/win32.c:1570: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/win32.c:1570: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/win32.c:1571: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/win32.c: In function `checkdir':
+win32/win32.c:2322: warning: implicit declaration of function `mkdir'
+win32/nt.c: In function `Initialize':
+win32/nt.c:115: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/nt.c:119: warning: dereferencing type-punned pointer will break strict-aliasing rules
+Creating library file: libunzip32.dll.a
+win32/win32.c: In function `NTQueryVolInfo':
+win32/win32.c:1570: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/win32.c:1570: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/win32.c:1571: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/win32.c: In function `checkdir':
+win32/win32.c:2322: warning: implicit declaration of function `mkdir'
+win32/nt.c: In function `Initialize':
+win32/nt.c:115: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/nt.c:119: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/win32.c: In function `NTQueryVolInfo':
+win32/win32.c:1570: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/win32.c:1570: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/win32.c:1571: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/win32.c: In function `checkdir':
+win32/win32.c:2322: warning: implicit declaration of function `mkdir'
+win32/nt.c: In function `Initialize':
+win32/nt.c:115: warning: dereferencing type-punned pointer will break strict-aliasing rules
+win32/nt.c:119: warning: dereferencing type-punned pointer will break strict-aliasing rules

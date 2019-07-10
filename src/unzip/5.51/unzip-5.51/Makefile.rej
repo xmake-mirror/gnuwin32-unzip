@@ -1,0 +1,38 @@
+***************
+*** 167,182 ****
+  
+  
+  # Default target is all the executables
+- unzips: unzip$(EXE) funzip$(EXE) unzipsfx$(EXE)
+  dll:    unzip32.dll
+  dllsample: uzexampl.exe
+  guisfx: SFXWiz32.exe
+  lib:    libunzip32.a
+- all:    unzips dll dllsample guisfx lib
+  
+  unzip$(EXE): $(OBJU)
+  	$(LD) $(LDFLAGS) $(LDVER) $(OBJU) $(LDLIBS)
+  
+  unzipsfx$(EXE): $(OBJX)
+  	$(LD) $(LDFLAGS) $(LDVER) $(OBJX) $(LDLIBS)
+  
+--- 172,190 ----
+  
+  
+  # Default target is all the executables
++ all:    unzips dll dllsample guisfx lib
++ unzips: unzip$(EXE) funzip$(EXE) unzipsfx$(EXE) zipinfo$(EXE)
+  dll:    unzip32.dll
+  dllsample: uzexampl.exe
+  guisfx: SFXWiz32.exe
+  lib:    libunzip32.a
+  
+  unzip$(EXE): $(OBJU)
+  	$(LD) $(LDFLAGS) $(LDVER) $(OBJU) $(LDLIBS)
+  
++ zipinfo$(EXE): $(OBJI)
++ 	$(LD) $(LDFLAGS) $(LDVER) $(OBJI) $(LDLIBS)
++ 
+  unzipsfx$(EXE): $(OBJX)
+  	$(LD) $(LDFLAGS) $(LDVER) $(OBJX) $(LDLIBS)
+  

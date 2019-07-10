@@ -1,0 +1,45 @@
+Hmm...  Looks like a unified diff to me...
+The text leading up to this was:
+--------------------------
+|diff -ipuwr -x config.log -x config.status -x config.cache -x '*.Po' -x '*.pot' unzip-5.50-orig/Makefile unzip-5.50/Makefile
+|--- unzip-5.50-orig/Makefile	2001-11-10 22:40:16.000000000 +0100
+|+++ unzip-5.50/Makefile	2003-10-05 13:32:02.593750000 +0200
+--------------------------
+Patching file Makefile using Plan A...
+Hunk #1 succeeded at 65.
+Hunk #2 succeeded at 133.
+Hunk #3 FAILED at 172.
+Hunk #4 succeeded at 192.
+Hunk #5 succeeded at 201.
+Hunk #6 succeeded at 214.
+Hunk #7 succeeded at 359.
+Hunk #8 succeeded at 405.
+1 out of 8 hunks FAILED -- saving rejects to file Makefile.rej
+Hmm...  The next patch looks like a unified diff to me...
+The text leading up to this was:
+--------------------------
+|diff -ipuwr -x config.log -x config.status -x config.cache -x '*.Po' -x '*.pot' unzip-5.50-orig/win32/win32.c unzip-5.50/win32/win32.c
+|--- unzip-5.50-orig/win32/win32.c	2002-01-20 22:48:32.000000000 +0100
+|+++ unzip-5.50/win32/win32.c	2003-10-04 21:17:25.750000000 +0200
+--------------------------
+Patching file win32/win32.c using Plan A...
+Hunk #1 succeeded at 65 (offset 3 lines).
+Hmm...  The next patch looks like a unified diff to me...
+The text leading up to this was:
+--------------------------
+|diff -ipuwr -x config.log -x config.status -x config.cache -x '*.Po' -x '*.pot' unzip-5.50-orig/windll/guisfx/sfxwiz.rc unzip-5.50/windll/guisfx/sfxwiz.rc
+|--- unzip-5.50-orig/windll/guisfx/sfxwiz.rc	1998-11-10 00:54:56.000000000 +0100
+|+++ unzip-5.50/windll/guisfx/sfxwiz.rc	2003-10-05 09:19:16.859375000 +0200
+--------------------------
+Patching file windll/guisfx/sfxwiz.rc using Plan A...
+Hunk #1 succeeded at 5.
+Hmm...  The next patch looks like a unified diff to me...
+The text leading up to this was:
+--------------------------
+|diff -ipuwr -x config.log -x config.status -x config.cache -x '*.Po' -x '*.pot' unzip-5.50-orig/windll/windll.rc unzip-5.50/windll/windll.rc
+|--- unzip-5.50-orig/windll/windll.rc	2002-02-17 19:17:16.000000000 +0100
+|+++ unzip-5.50/windll/windll.rc	2003-10-05 09:43:40.812500000 +0200
+--------------------------
+Patching file windll/windll.rc using Plan A...
+Hunk #1 succeeded at 38.
+done

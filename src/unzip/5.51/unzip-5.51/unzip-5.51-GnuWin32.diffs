@@ -1,0 +1,223 @@
+diff -ipuwr -x config.log -x config.status -x config.cache -x '*.Po' -x '*.pot' unzip-5.51-orig/win32/win32.c unzip-5.51/win32/win32.c
+--- unzip-5.51-orig/win32/win32.c	2004-03-01 19:55:24.000000000 +0100
++++ unzip-5.51/win32/win32.c	2005-01-14 21:08:46.000000000 +0100
+@@ -65,7 +65,7 @@
+ 
+ #ifndef FUNZIP          /* most of this file is not used with fUnZip */
+ 
+-#if (defined(__EMX__) || defined(__CYGWIN__))
++#if (defined(__EMX__) || defined(__CYGWIN__) || defined(__GW32__))
+ #  define MKDIR(path,mode)   mkdir(path,mode)
+ #else
+ #  define MKDIR(path,mode)   mkdir(path)
+@@ -615,7 +615,7 @@ int test_NTSD(__G__ eb, eb_size, eb_ucpt
+ 
+ 
+ 
+-
++#ifndef __GW32__
+ /**********************/
+ /* Function IsWinNT() */
+ /**********************/
+@@ -633,6 +633,7 @@ int IsWinNT(void)       /* returns TRUE 
+     }
+     return (int)g_PlatformId;
+ }
++#endif
+ 
+ 
+ /* DEBUG_TIME insertion: */
+@@ -1995,7 +1996,7 @@ int mapname(__G__ renamed)
+         != (RO_extra_block *)NULL)
+     {
+         /* file *must* have a RISC OS extra field */
+-        long ft = (long)makelong((ef_spark->loadaddr);
++        long ft = (long)makelong((ef_spark->loadaddr));
+         /*32-bit*/
+         if (lastcomma) {
+             pp = lastcomma + 1;
+diff -ipuwr -x config.log -x config.status -x config.cache -x '*.Po' -x '*.pot' unzip-5.51-orig/windll/guisfx/sfxwiz.rc unzip-5.51/windll/guisfx/sfxwiz.rc
+--- unzip-5.51-orig/windll/guisfx/sfxwiz.rc	1998-11-10 01:54:56.000000000 +0100
++++ unzip-5.51/windll/guisfx/sfxwiz.rc	2004-05-24 08:26:46.812500000 +0200
+@@ -5,5 +5,7 @@
+ 
+ #include "sfxwiz.dlg"
+ 
++#include "SFXWiz32.rc"
++
+ ICN_INSTALL ICON  "sfxw.ico"
+ 
+diff -ipuwr -x config.log -x config.status -x config.cache -x '*.Po' -x '*.pot' unzip-5.51-orig/windll/windll.rc unzip-5.51/windll/windll.rc
+--- unzip-5.51-orig/windll/windll.rc	2003-03-19 01:56:30.000000000 +0100
++++ unzip-5.51/windll/windll.rc	2004-05-24 08:26:46.828125000 +0200
+@@ -38,3 +38,5 @@ BEGIN
+ #endif
+     END
+ END
++
++#include "unzip32.rc"
+diff -ipuwr -x config.log -x config.status -x config.cache -x '*.Po' -x '*.pot' unzip-5.51-orig/windll/windllgcc.def unzip-5.51/windll/windllgcc.def
+--- unzip-5.51-orig/windll/windllgcc.def	1999-11-07 02:21:38.000000000 +0100
++++ unzip-5.51/windll/windllgcc.def	2004-05-24 14:54:57.015625000 +0200
+@@ -1,17 +1,145 @@
+-LIBRARY UNZIP32
+-
+-DESCRIPTION 'Windows Info-ZIP UnZip32 DLL by Mike White'
+-
+-
+ EXPORTS
+-     Wiz_SingleEntryUnzip=Wiz_SingleEntryUnzip@24
+-     UzpVersion=UzpVersion@0
+-     Wiz_Init=Wiz_Init@8
+-     Wiz_SetOpts=Wiz_SetOpts@8
+-     Wiz_Unzip=Wiz_Unzip@20
+-     Wiz_Validate=Wiz_Validate@8
+-     Wiz_NoPrinting=Wiz_NoPrinting@4
+-     UzpVersion2=UzpVersion2@4
+-     Wiz_UnzipToMemory=Wiz_UnzipToMemory@16
+-     Wiz_Grep=Wiz_Grep@24
+-     UzpFreeMemBuffer=UzpFreeMemBuffer@4
++    CentSigMsg @1 DATA
++    CompiledWith @2 DATA
++    DllGetVersion @3
++    EndSigMsg @4 DATA
++    ExclFilenameNotMatched @5 DATA
++    FilenameNotMatched @6 DATA
++    GG @7 DATA
++    GetVolumeCaps @8
++    IsWinNT @9
++    ProcessDefer @10
++    ReportMsg @11 DATA
++    SecuritySet @12
++    SeekMsg @13 DATA
++    SetDeferLock @14 DATA
++    SetFileSize @15
++    TruncEAs @16 DATA
++    TruncNTSD @17 DATA
++    UzpFreeMemBuffer = UzpFreeMemBuffer@4 @18
++    UzpFreeMemBuffer@4 @19
++    UzpInput = UzpInput@16 @20
++    UzpInput@16 @21
++    UzpMessageNull = UzpMessageNull@16 @22
++    UzpMessageNull@16 @23
++    UzpMessagePrnt = UzpMessagePrnt@16 @24
++    UzpMessagePrnt@16 @25
++    UzpPassword = UzpPassword@24 @26
++    UzpPassword@24 @27
++    UzpValidate = UzpValidate@8 @28
++    UzpValidate@8 @29
++    UzpVersion = UzpVersion@0 @30
++    UzpVersion2 = UzpVersion2@4 @31
++    UzpVersion2@4 @32
++    UzpVersion@0 @33
++    ValidateSecurity @34
++    VersionDate @35 DATA
++    VolumeCapsLock @36 DATA
++    WEP = WEP@4 @37
++    WEP@4 @38
++    Wiz_Grep = Wiz_Grep@24 @39
++    Wiz_Grep@24 @40
++    Wiz_Init = Wiz_Init@8 @41
++    Wiz_Init@8 @42
++    Wiz_NoPrinting = Wiz_NoPrinting@4 @43
++    Wiz_NoPrinting@4 @44
++    Wiz_SetOpts = Wiz_SetOpts@8 @45
++    Wiz_SetOpts@8 @46
++    Wiz_SingleEntryUnzip = Wiz_SingleEntryUnzip@24 @47
++    Wiz_SingleEntryUnzip@24 @48
++    Wiz_Unzip = Wiz_Unzip@20 @49
++    Wiz_Unzip@20 @50
++    Wiz_UnzipToMemory = Wiz_UnzipToMemory@16 @51
++    Wiz_UnzipToMemory@16 @52
++    Wiz_Validate = Wiz_Validate@8 @53
++    Wiz_Validate@8 @54
++    Zipnfo @55 DATA
++    _CRT_glob @56 DATA
++    bInitialized @57 DATA
++    central_hdr_sig @58 DATA
++    check_for_newer @59
++    checkdir @60
++    close_outfile @61
++    close_redirect @62
++    crc32 @63 DATA
++    dateformat @64
++    dateseparator @65
++    decrypt @66
++    decrypt_byte @67
++    defer_dir_attribs @68
++    defer_leftover_input @69
++    dll_error_return @70 DATA
++    do_string @71
++    do_wild @72
++    dos_to_unix_time @73
++    ef_scan_for_izux @74
++    end_central_sig @75 DATA
++    explode @76
++    extract_izvms_block @77
++    extract_or_test_files @78
++    fNoPrinting @79 DATA
++    flush @80
++    fnames @81 DATA
++    fnfilter @82
++    fnprint @83
++    free_G_buffers @84
++    g_VolumeCaps @85 DATA
++    g_bRestorePrivilege @86 DATA
++    g_bSaclPrivilege @87 DATA
++    getRISCOSexfield @88
++    get_cdir_ent @89
++    get_crc_table @90
++    get_time_stamp @91
++    globalsCtor @92
++    hDCL @93 DATA
++    hInitMutex @94 DATA
++    hInst @95 DATA
++    huft_build @96
++    huft_free @97
++    hwildZipFN @98 DATA
++    inflate @99
++    inflate_codes @100
++    inflate_free @101
++    init_keys @102
++    iswild @103
++    list_files @104
++    local_hdr_sig @105 DATA
++    makelong @106
++    makeword @107
++    mapattr @108
++    mapname @109
++    mask_bits @110 DATA
++    match @111
++    memextract @112
++    memflush @113
++    open_input_file @114
++    open_outfile @115
++    pSetHead @116 DATA
++    pSetTail @117 DATA
++    plastchar @118
++    process_cdir_file_hdr @119
++    process_defer_NT @120
++    process_local_file_hdr @121
++    process_zipfiles @122
++    ratio @123
++    readbuf @124
++    readbyte @125
++    redirect_outfile @126
++    seek_zipf @127
++    setFileNotFound @128
++    set_direc_attribs @129
++    stamp_file @130
++    test_NTSD @131
++    undefer_input @132
++    unshrink @133
++    unzipToMemory @134
++    update_keys @135
++    uz_end_central @136
++    uzmbschr @137
++    uzmbsrchr @138
++    win_fprintf @139
++    writeToMemory @140
++    ydays @141 DATA
++    zi_end_central @142
++    zipinfo @143
++    zstat_win32 @144
